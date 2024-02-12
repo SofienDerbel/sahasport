@@ -9,6 +9,7 @@ body,
 }
 ::-webkit-scrollbar {
     width: 5px;
+    height: 7px;
   }
   
   /* Track */
@@ -25,4 +26,12 @@ body,
   ::-webkit-scrollbar-thumb:hover {
     background: #969494; 
     cursor: pointer;
+  }
+
+
+  .leaflet-bottom,
+  .leaflet-control,
+  .leaflet-pane,
+  .leaflet-top{
+    z-index: 0 !important
   }
