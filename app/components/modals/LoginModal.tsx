@@ -21,7 +21,7 @@ import { useRouter } from 'next/navigation';
 const LoginModal = () => {
     const router = useRouter();
     const registerModal =useRegisterModal();
-    const loginMoadl = useLoginModal();
+    const loginModal = useLoginModal();
     const [isLoading, setIsLoading] = useState(false);
 
     const {
@@ -50,7 +50,7 @@ const LoginModal = () => {
             if(callback?.ok){
                 toast.success('Logged in')
                 router.refresh(); //update the active values
-                loginMoadl.onClose();
+                loginModal.onClose();
             }
 
             if(callback?.error){
@@ -58,6 +58,10 @@ const LoginModal = () => {
             }
         })
     }
+    const toggle= useCallback(()=>{
+        loginModal.onClose();
+        registerModal.onOpen()
+    },[loginModal,registerModal])
 
     const bodyContent = (
         <div className='flex flex-col gap-4'>
@@ -105,15 +109,15 @@ const LoginModal = () => {
             font-light'>
                     <div className='justify-center flex flex-row items-center gap-2' >
                     <div>
-                        Already have an account ?
+                        First time using Airbnb ?
                         </div>
                         <div 
-                        onClick={registerModal.onClose}
+                        onClick={toggle}
                         className='
                         text-neutral-800
                         cursor-pointer
                         hover:underline'>
-                        Login
+                        Create an account
                         </div>
                     
                     </div>
@@ -123,10 +127,10 @@ const LoginModal = () => {
     return (
         <Modal 
         disabled={ isLoading}
-        isOpen={loginMoadl.isOpen}
+        isOpen={loginModal.isOpen}
         title="Login"
         actionLable='Continue'
-        onClose={loginMoadl.onClose}
+        onClose={loginModal.onClose}
         onSubmit={handleSubmit(onSubmit)}
         body={bodyContent}
         footer={footerContent}
