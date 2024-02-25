@@ -32,10 +32,13 @@ export default async function RootLayout({
           <ToasterProvider></ToasterProvider>
           <LoginModal />
           <RegisterModal />
-          <RentModal/>
-          <Navbar currentUser = {currentUser} />
+          <RentModal />
+          <Navbar currentUser={currentUser} />
         </ClientOnly>
-        {children}</body>
+        <div className="pb-20 pt-28">
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
