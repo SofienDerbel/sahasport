@@ -7,7 +7,13 @@ export default async function getListings(){
                 createdAt: 'desc'
             }
         });
-        return listings
+
+        // to avoid returning a date to a client compoenent
+        const safeListings = listings.map((listing)=>({
+            ...listing,
+            createdAt: listing.createdAt.toISOString(),
+        }));
+        return safeListings;
     } catch (error : any) {
         throw new Error(error);
     }

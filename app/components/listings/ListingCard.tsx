@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { SafeUser } from '@/app/types';
+import { SafeListings, SafeUser } from '@/app/types';
 import { Listing, Reservation } from '@prisma/client';
 
 import useContries from '@/app/hooks/useContries';
@@ -10,7 +10,7 @@ import Image from 'next/image';
 import HeartButton from '../HeartButton';
 import Button from '../Button';
 interface listingCardProps {
-    data: Listing;
+    data: SafeListings;
     reservation?: Reservation;
     onAction?: (id: string) => void;
     disabled?: boolean;
@@ -67,56 +67,61 @@ const ListingCard: React.FC<listingCardProps> = ({
     return (
         <div
             onClick={() => router.push(`/listings/${data.id}`)}
-            className='col-span-1 cursor-pointer group'>
-            <div className='flex flex-col gap-2 w-full'>
-                <div className='
-                aspect-square
-                w-full
-                relative
-                overflow-hidden
-                rounded-xl'
+            className="col-span-1 cursor-pointer group"
+        >
+            <div className="flex flex-col gap-2 w-full">
+                <div
+                    className="
+            aspect-square 
+            w-full 
+            relative 
+            overflow-hidden 
+            rounded-xl
+          "
                 >
                     <Image
                         fill
-                        alt='Listing'
+                        className="
+              object-cover 
+              h-full 
+              w-full 
+              group-hover:scale-110 
+              transition
+            "
                         src={data.imageSrc}
-                        className='
-                object-cover
-                h-full
-                w-full
-                group-hover:scale-110
-                transition'
+                        alt="Listing"
                     />
-                    <div className='absolute top-3 right-3'>
+                    <div className="
+            absolute
+            top-3
+            right-3
+          ">
                         <HeartButton
                             listingId={data.id}
                             currentUser={currentUser}
                         />
-
                     </div>
                 </div>
-                <div className='font-semibold text-lg'>
+                <div className="font-semibold text-lg">
                     {location?.region}, {location?.label}
                 </div>
-                <div className='font-light text-neutral-500'>
+                <div className="font-light text-neutral-500">
                     {reservationDate || data.category}
                 </div>
-                <div className='flex flex-row items-center gap-1'>
-                    <div className='font-semibold'>
-                        ${price}
+                <div className="flex flex-row items-center gap-1">
+                    <div className="font-semibold">
+                        $ {price}
                     </div>
                     {!reservation && (
-                        <div className='font-light'>
-                            night
-                        </div>
+                        <div className="font-light">night</div>
                     )}
                 </div>
                 {onAction && actionLabel && (
-                    <Button 
-                    disabled={disabled}
-                    small
-                    label={actionLabel}
-                    onClick={handleCancel}
+                    <Button
+                        disabled={disabled}
+                        small
+                        label={actionLabel}
+                        onClick={handleCancel}
                     />
                 )}
             </div>
